@@ -80,13 +80,15 @@ def compute_root(poly, x_0, epsilon):
     returns: tuple (float, int)
     """
     iterations = 0
+    x_1 = x_0
     primePoly = compute_deriv(poly)    
     # computes the value first
     difference = evaluate_poly(poly, x_0)
     # print(" Initial guess results in y = " + str(difference))
     # then starts the loop and will not exicute if perfect guess
     while (abs(difference) >= epsilon):
-        x_1 = (evaluate_poly(poly, x_0) / evaluate_poly(primePoly, x_0))
+        # print("x_0 = " + str(x_0) + " x_1 = " + str(x_1))
+        x_1 = x_0 - (evaluate_poly(poly, x_0) / evaluate_poly(primePoly, x_0))
         difference = evaluate_poly(poly, x_1)
         x_0 = x_1
         iterations += 1
