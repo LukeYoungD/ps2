@@ -24,10 +24,11 @@ def evaluate_poly(poly, x):
         # print (str(e) + " ")
         # print ("pos =" + str(pos) + " " + str(x**pos))
         
-        total = total + (e*(x**pos))
+        total += (e*(x**pos))
         # degree = degree -1
         pos += 1
     print("Poly Evaluates to: " + str(total))
+    return total
 # end evaluate_poly
 
 
@@ -44,7 +45,19 @@ def compute_deriv(poly):
     poly: tuple of numbers, length > 0
     returns: tuple of numbers
     """
-    # TO DO ... 
+    newPoly = ()
+    pos = 0
+    for e in poly:
+        # print (str(e) + " ")
+        # print ("pos =" + str(pos) + " " + str(x**pos))
+        
+        if pos != 0:
+            t = e*pos
+            newPoly += (t,)
+        pos += 1
+    print("The derivative of: " + str(poly) + " is: " + str(newPoly))
+    return newPoly
+# end compute_deriv
 
 def compute_root(poly, x_0, epsilon):
     """
@@ -70,4 +83,7 @@ def compute_root(poly, x_0, epsilon):
 
 ## Test Code Follwoing
 expr = (0.0, 0.0, 5.0, 9.3, 7.0)
-evaluate_poly(expr, -13)
+##evaluate_poly(expr, -13) #cancelled to speed up testing
+
+exprTwo = (-13.39, 0.0, 17.5, 3.0, 1.0)
+compute_deriv(exprTwo)
