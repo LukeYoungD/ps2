@@ -17,7 +17,18 @@ def evaluate_poly(poly, x):
     x: number
     returns: float
     """
-    # TO DO ... 
+    total = 0.0
+    pos = 0
+    # print("degree = ", degree)
+    for e in poly:
+        # print (str(e) + " ")
+        # print ("pos =" + str(pos) + " " + str(x**pos))
+        
+        total = total + (e*(x**pos))
+        # degree = degree -1
+        pos += 1
+    print("Poly Evaluates to: " + str(total))
+# end evaluate_poly
 
 
 def compute_deriv(poly):
@@ -57,3 +68,6 @@ def compute_root(poly, x_0, epsilon):
     """
     # TO DO ... 
 
+## Test Code Follwoing
+expr = (0.0, 0.0, 5.0, 9.3, 7.0)
+evaluate_poly(expr, -13)
