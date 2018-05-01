@@ -27,7 +27,7 @@ def evaluate_poly(poly, x):
         total += (e*(x**pos))
         # degree = degree -1
         pos += 1
-    print("Poly Evaluates to: " + str(total))
+    # print("Poly Evaluates to: " + str(total))
     return total
 # end evaluate_poly
 
@@ -79,11 +79,29 @@ def compute_root(poly, x_0, epsilon):
     epsilon: float > 0
     returns: tuple (float, int)
     """
-    # TO DO ... 
+    iterations = 0
+    primePoly = compute_deriv(poly)    
+    # computes the value first
+    difference = evaluate_poly(poly, x_0)
+    # print(" Initial guess results in y = " + str(difference))
+    # then starts the loop and will not exicute if perfect guess
+    while (abs(difference) >= epsilon):
+        x_1 = (evaluate_poly(poly, x_0) / evaluate_poly(primePoly, x_0))
+        difference = evaluate_poly(poly, x_1)
+        x_0 = x_1
+        iterations += 1
+
+    print("Found root at x = " + str(x_0)+ " y = " + str(evaluate_poly(poly, x_0)) + " and it took " + str(iterations) + " iterations")
+    return (x_0, iterations)
 
 ## Test Code Follwoing
 expr = (0.0, 0.0, 5.0, 9.3, 7.0)
-##evaluate_poly(expr, -13) #cancelled to speed up testing
+print evaluate_poly(expr, -13)
 
 exprTwo = (-13.39, 0.0, 17.5, 3.0, 1.0)
 compute_deriv(exprTwo)
+
+exprThree = (-13.39, 0.0, 17.5, 3.0, 1.0)
+guess = 0.1
+tolerance = 0.0001
+compute_root(exprThree, guess, tolerance)
