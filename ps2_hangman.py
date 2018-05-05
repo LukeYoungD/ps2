@@ -46,3 +46,39 @@ def choose_word(wordlist):
 wordlist = load_words()
 
 # your code begins here!
+
+## Functions:
+def charBank():
+    array = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+    return array
+
+def bankDisp(array):
+    print("Your remaining letters are: ")
+    for i in array:
+        print i,
+    return
+def checkGuess(word, bank, guess):
+    positions = []
+    if guess in bank:
+        for i in word:
+            if guess == i:
+                positions = positions + [guess,]
+    print positions
+    return positions
+
+def gameLoop(word, bank):
+    bankDisp(charBank)
+    print(" ")
+    guess = input("Guess a letter: ") # Error here
+    ## Check to see if guess is contained within the word
+    checkGuess(word, bank, guess)
+    
+## Initiate Game
+print("Welcome to Hangman!")
+word = choose_word(wordlist)
+wordLength = len(word)
+guesses = (wordLength/3 + 5)
+print("The word to guess is " + str(wordLength) + " letters long.")
+charBank = charBank()
+
+gameLoop(word, charBank)
