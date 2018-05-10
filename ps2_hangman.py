@@ -48,6 +48,15 @@ wordlist = load_words()
 # your code begins here!
 
 ## Functions:
+def blankWord(word, length): #returns a blank string of same length + spaces
+    pos = 0
+    blank = []
+    while pos < length:
+        blank += ['_ ',]
+        pos += 1
+    print("blank word is", "".join(blank))
+    return blank
+
 def charBank():
     array = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     return array
@@ -58,29 +67,78 @@ def bankDisp(array):
         print i,
     return
 
-def checkGuess(word, bank, guess):
-    positions = []
+def checkGuess(word, bank, guess, blank):
+    correct = False
     if guess in bank:
+        pos = 0
         for i in word:
             if guess == i:
-                positions = positions + [i,]
-    print positions
-    return positions
+                correct = True
+                blank[pos] = guess
+            pos += 1
+    global guesses
+    if correct == True:
+        print("Correct: " + "".join(blank))
+    else:
+        print("Sorry, Nope: " + "".join(blank))
+        guesses -= 1
+    return blank
 
-def gameLoop(word, bank):
-    bankDisp(charBank)
+def updateBank(guess, bank):
+    pos = 0
+    for i in bank:
+        if i == guess:
+            del(bank[pos])
+            return
+        pos += 1
+    return
+
+def gameLoop(word, bank, blank):
+    global guesses
+    bankDisp(bank)
     print(" ")
+    print(str(guesses) + " guesses remaining!")
     guess = raw_input("Guess a letter: ") # Error here (fixed by changing to raw_input)
     ## Check to see if guess is contained within the word
-    checkGuess(word, bank, guess)
+    print(" ")
+    blank = checkGuess(word, bank, guess, blank)
+    updateBank(guess, bank)
+    
+
+    win = (word == "".join(blank))
+    if guesses == 0:
+        print("you lose, it was: " + str(word))
+        playAgain()
+    elif win == False:
+        gameLoop(word, bank, blank)
+    elif win == True:
+        print("You win! Well Done")
+        playAgain()
+
+def playAgain():
+    again = 'n'
+    again = raw_input("Would you like to play again? y/n ")
+    if again == 'y':
+        startGame()
+    else:
+        print("Bye!")
     
 ## Initiate Game
-print("Welcome to Hangman!")
-word = choose_word(wordlist)
-wordLength = len(word)
-guesses = (wordLength/3 + 5)
-print("The word to guess is " + str(wordLength) + " letters long.")
-charBank = charBank()
+word = ''
+guesses = 0
 
-print(word)
-gameLoop(word, charBank)
+def startGame():
+    global word
+    global guesses
+    print("Welcome to Hangman!")
+    word = choose_word(wordlist)
+    wordLength = len(word)
+    guesses = (wordLength/3 + 5)
+    print("The word to guess is " + str(wordLength) + " letters long.")
+    bank = charBank()
+    blank = blankWord(word, wordLength)
+
+    ## print(word)
+    gameLoop(word, bank, blank)
+
+startGame()
