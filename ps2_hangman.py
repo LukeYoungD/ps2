@@ -57,19 +57,20 @@ def bankDisp(array):
     for i in array:
         print i,
     return
+
 def checkGuess(word, bank, guess):
     positions = []
     if guess in bank:
         for i in word:
             if guess == i:
-                positions = positions + [guess,]
+                positions = positions + [i,]
     print positions
     return positions
 
 def gameLoop(word, bank):
     bankDisp(charBank)
     print(" ")
-    guess = input("Guess a letter: ") # Error here
+    guess = raw_input("Guess a letter: ") # Error here (fixed by changing to raw_input)
     ## Check to see if guess is contained within the word
     checkGuess(word, bank, guess)
     
@@ -81,4 +82,5 @@ guesses = (wordLength/3 + 5)
 print("The word to guess is " + str(wordLength) + " letters long.")
 charBank = charBank()
 
+print(word)
 gameLoop(word, charBank)
